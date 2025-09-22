@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    image: lmsimage
+    container_name: lmscontainer
+    depends_on:
+      - db
+    ports:
+      - "9090:8080"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: lmsdb
+
+  db:
+    image: mysql:8.0
+    container_name: lmsdbcontainer
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lmsdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
